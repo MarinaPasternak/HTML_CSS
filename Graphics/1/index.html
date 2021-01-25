@@ -1,0 +1,95 @@
+<html>
+  <head>
+  </head>
+  <body>
+    
+    <div class="center-block">
+        <div class="images">
+            <div class="side-image"><span>1</span><img src="img/1.jpg"></div>
+            <div class="side-image"><span>2</span><img src="img/2.jpg"></div>
+            <div class="side-image"><span>3</span><img src="img/3.jpg"></div>
+            <div class="side-image"><span>4</span><img src="img/5.jpg"></div>
+            <div class="main-image">
+                <img src="img/4.jpg">
+                <button class="next">Next</button>
+            </div>
+            
+            <div class="side-image"><span>5</span><img  src="img/6.jpg"></div>
+            <div class="side-image"><span>6</span><img  src="img/7.jpg"></div>
+            <div class="side-image"><span>7</span><img  src="img/8.jpg"></div>
+            <div class="side-image"><span>8</span><img  src="img/9.jpg"></div>
+        </div>
+    </div>
+
+    <style>
+      .center-block{
+        position: relative;
+        left: 25%;
+        top: 15%;
+        width: fit-content;
+       
+      }
+
+      span{
+        z-index: 2;
+        top: 20px;
+        left: 20px;
+        position: relative;
+        background-color: white;
+      }
+
+       .images{
+              display: grid;
+          grid-template-columns: repeat(3, 400px);
+          column-gap: 9px;
+          row-gap: 9px;
+       }
+       .images .side-image{
+           width: 300px;
+           height: 300px;
+           margin: 10px;
+       }
+       .side-image img{
+          width: 100%;
+          height: 93%;
+       }
+       .main-image{
+           margin: 20px;
+           display: grid;
+       }
+       .main-image img{
+         width: 100%;
+          height: 93%;
+       }
+       button{
+        width: 100px;
+       }
+    </style>
+
+    <script type="text/javascript">
+          let imagBlock = document.querySelectorAll(".side-image img"); //получаем все картинки, кроме той что по центру
+          let mainImage = document.querySelector(".main-image img");// главная картинка
+          let btn = document.querySelector(".next");// кнопка для перехода
+          for(let i =0; i< imagBlock.length; i++){
+            imagBlock[i].addEventListener('click', function(){//на кажду неглавную картинку навешиваем событие 
+                mainImage.src = this.src;// главная картинка отображает ту на которую нажали
+            })
+          }
+          btn.onclick =  function (){
+            let currentImgName = mainImage.src; // получаем адресс текщей главной картинки 
+            // регуляркой находим номер картинки номер_каптинки.jpg
+            // слайсом получаем ее
+            let nameFile = parseInt(currentImgName.slice(currentImgName.indexOf("img/")+4, currentImgName.indexOf(".")));
+            if(nameFile==9){
+              // если номер картинки текущей картинки = максимальному номеру картинки выводим самую первую
+                mainImage.src = `img/1.jpg`;
+
+            }
+            else{
+              // в противоположном случаее номер текщей + 1
+                mainImage.src = `img/${nameFile+1}.jpg`;
+            }
+          }
+    </script>
+  </body>
+</html>

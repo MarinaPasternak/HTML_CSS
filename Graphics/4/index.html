@@ -1,0 +1,132 @@
+<html>
+  <head>
+  </head>
+  <body>
+      <div>
+        <div class="svg-block">
+            <svg>
+                <circle id="bodyPart1" r="10mm" cx="10mm" cy="40mm" fill="silver"/>
+                <circle id="bodyPart2" r="10mm" cx="10mm" cy="25mm" fill="silver" />
+                <circle id="bodyPart3" r="10mm" cx="10mm" cy="10mm" fill="silver"/>
+                <circle id="eye1" r="1mm" cx="5mm" cy="7mm" fill="black"/>
+                <circle id="eye2" r="1mm" cx="15mm" cy="7mm" fill="black"/>
+                <polyline id="nose" points="37,24 54,31 37,37 37,24" fill="orange"stroke="red" stroke-width="3" />
+                <path id="smile" d="M 15 44 C 20 76 49 51 49 47" stroke="black" fill="transparent"/>
+            </svg> 
+        </div>
+        <div class="panel">
+            <label>fill color
+                <input class="fill-color" type="color" name="favcolor" value="#FFFFF">
+            </label>
+            
+            <label>strok color
+                <input class="strok-color" type="color" name="favcolor" value="#FFFFF">
+            </label>
+            
+            <label>opecity
+                <input class="opecity" type="range" min="0" max="1" step="0.1" value="0.5"> 
+            </label>
+
+            <label>stroke width
+                <input class="stroke-width" type="range" min="0" max="6" step="1" value="1"> 
+            </label>
+            
+            
+        </div>
+
+    </div>
+
+    <style>
+        svg{
+            height: 600px;
+            width: 600px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        let parts = document.querySelectorAll("svg *");
+
+        let colorStroke = document.querySelector(".strok-color");
+        let colorFill = document.querySelector(".fill-color");
+        let opecity = document.querySelector(".opecity");
+        let strokeWidth = document.querySelector(".stroke-width");
+
+        let circle = document.querySelectorAll("svg circle");
+        let polyline = document.querySelector("svg polyline");
+        let path = document.querySelector("svg path");
+
+        let lastInput = null;
+
+        for(let i=0; i< parts.length;i++){
+            parts[i].addEventListener("click", function(){
+                let elem = document.querySelector(`.${lastInput}`);
+                switch (lastInput){
+                    case "fill-color":
+                        this.style.fill = elem.value;
+                        break;
+                    case "strok-color":
+                        this.style.stroke = elem.value;
+                        break;
+                    case "opecity":
+                        this.style.fillOpacity = elem.value;
+                        break;
+                    case "stroke-width":
+                        this.style.strokeWidth = elem.value;
+                        this.style.stroke = colorStroke.value;
+                        break;
+
+                }
+
+            });
+            
+        }
+
+
+        for(let i=0; i< circle.length;i++){
+                circle[i].addEventListener("dblclick", function(){
+                for(let i=0; i< circle.length;i++){
+                    circle[i].style.fill = colorFill.value;
+                    circle[i].style.stroke = colorStroke.value;
+                    circle[i].style.fillOpacity = opecity.value;
+                    circle[i].style.strokeWidth = strokeWidth.value;
+                }
+            });
+        }
+
+        polyline.addEventListener("dblclick", function(){
+            this.style.fill = colorFill.value;
+            this.style.stroke = colorStroke.value;
+            this.style.fillOpacity = opecity.value;
+            this.style.strokeWidth = strokeWidth.value;
+        })
+
+        path.addEventListener("dblclick", function(){
+            this.style.fill = colorFill.value;
+            this.style.stroke = colorStroke.value;
+            this.style.fillOpacity = opecity.value;
+            this.style.strokeWidth = strokeWidth.value;
+        })
+       
+        colorStroke.onclick = function(){
+            lastInput = this.className;
+            console.log(lastInput);
+        }
+
+        colorFill.onclick = function(){
+            lastInput = this.className;
+            console.log(lastInput);
+        }
+
+        opecity.onclick = function(){
+            lastInput = this.className;
+            console.log(lastInput);
+        }
+        strokeWidth.onclick = function(){
+            lastInput = this.className;
+            console.log(lastInput);
+        }
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,248 @@
+<html>
+  <head>
+  </head>
+  <body>
+    
+    <div class="center-block">
+      <div class="images">
+          <div class="side-image"><img src="img/1.jpg"></div>
+          <div class="side-image"><img src="img/2.jpg"></div>
+          <div class="side-image"><img src="img/3.jpg"></div>
+          <div class="side-image"><img src="img/4.jpg"></div>
+          <div class="side-image"><img src="img/5.jpg"></div>
+          <div class="side-image"><img  src="img/6.jpg"></div>
+          <div class="side-image"><img  src="img/7.jpg"></div>
+          <div class="side-image"><img  src="img/8.jpg"></div>
+          <div class="side-image"><img  src="img/9.jpg"></div>
+      </div>
+    </div>
+    
+      
+
+
+    <div id="ligth-box" class="hidden-block">
+      <button class="close">Close</button>
+          <div class="images">
+            <div class="side-image"><span>1</span><img src="img/1.jpg"></div>
+            <div class="side-image"><span>2</span><img src="img/2.jpg"></div>
+            <div class="side-image"><span>3</span><img src="img/3.jpg"></div>
+            <div class="side-image"><span>4</span><img src="img/4.jpg"></div>
+            <div class="main-image">
+                <img src="">
+                <div>
+                  <button class="back">Back</button>
+                  <button class="next">Next</button>
+                </div> 
+            </div>
+            
+            <div class="side-image"><span>5</span><img  src="img/6.jpg"></div>
+            <div class="side-image"><span>6</span><img  src="img/7.jpg"></div>
+            <div class="side-image"><span>7</span><img  src="img/8.jpg"></div>
+            <div class="side-image"><span>8</span><img  src="img/9.jpg"></div>
+        </div>
+      </div>
+
+    <div class="hidden-block" id="modal">
+        <button class="close">Close</button>
+        <div class="modal-guts">
+          <img class="modal-image">
+          
+        </div>
+    </div>
+
+    <style>
+      .small-imgs{
+        display: flex;
+      }
+      .small-imgs img{
+        width: 250px;
+        width: 100px;
+      }
+
+      .center-block{
+        position: relative;
+        left: 25%;
+        top: 15%;
+        width: fit-content;
+       
+      }
+      #modal, #ligth-box {
+        width: 75%;
+        height: fit-content;
+        max-height: 100%;
+        position: fixed;
+        
+        z-index: 100;
+        
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        box-shadow: 0 0 60px 10px rgba(0, 0, 0, 0.9);
+      }
+
+      .modal-image{
+        width: 400px;
+        height: 400px;
+      }
+
+      .modal-guts {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        margin: 20px;
+    }
+
+      .images{
+              display: grid;
+          grid-template-columns: repeat(3, 400px);
+          column-gap: 9px;
+          row-gap: 9px;
+       }
+       .images .side-image{
+           width: 300px;
+           height: 300px;
+           margin: 10px;
+       }
+       .side-image img{
+          width: 100%;
+          height: 93%;
+       }
+       .main-image{
+        width: 300px;
+        height: 300px;
+        margin: 20px;
+          display: grid;
+       }
+       .main-image img{
+        width: 100%;
+        height: 300px;
+       }
+       button{
+        width: 100px;
+        height: 20px;
+       }
+
+        .hidden-block{
+          display: none; 
+          opacity:0; 
+          transition: 1s; 
+        }
+        .show-block{
+          display: block;
+          opacity:1; 
+          transition: 1s;
+       }
+
+       .hidden-img{ 
+          opacity:0; 
+          transition: 1s; 
+        }
+        .show-img{
+          display: block;
+          opacity:1; 
+          transition: 1s;
+       }
+
+      .buttons{
+        display: grid;
+      }
+    </style>
+
+    <script type="text/javascript">
+          let imagBlock = document.querySelectorAll(".center-block .side-image img");
+          
+
+          let lighthBox = document.getElementById("ligth-box");
+          let slider = document.querySelectorAll("#ligth-box img");
+          let mainImage = document.querySelector("#ligth-box .main-image img");
+          let closeLigthBox = document.querySelector("#ligth-box .close");
+
+          let btnNext = document.querySelector(".next");
+          let btnBack = document.querySelector(".back");
+
+          let modalImage = document.querySelector(".modal-image"); //картинка модального окна
+
+          for(let i =0; i< slider.length; i++){
+            slider[i].addEventListener('click', function(){
+                mainImage.src = this.src;
+            })
+          }
+
+          for(let i =0; i< imagBlock.length; i++){
+            imagBlock[i].addEventListener('dblclick', function(){
+              lighthBox.className = 'show-block';
+              mainImage.src = this.src;
+              modal.className = "hidden-block"
+            })
+          }
+
+          for(let i = 0; i< imagBlock.length; i++){
+            imagBlock[i].addEventListener('click', function(){
+              modal.className = 'show-block';
+              //передаем модальной картинке ссылку на картинку, которая центральной
+              modalImage.src = this.src;
+            })
+          }
+
+          btnNext.onclick =  function (){
+            let currentImgName = mainImage.src;
+            let nameFile = parseInt(currentImgName.slice(currentImgName.indexOf("img/")+4, currentImgName.indexOf(".")));
+            
+            if(nameFile==9){
+              //меняем класс центральной картинки, ставим задержку, чтоб было видно переход
+              setTimeout(mainImage.className = 'show-img',1500)
+              mainImage.src = `img/1.jpg`;
+            }
+            else{
+              //сначала делаем невидимой картинку
+              mainImage.className = "hidden-img" 
+              //после задержки делаем видимой и меняем саму картинку, на ту что выбрали
+              setTimeout( function(){
+                mainImage.className = "show-img" 
+                mainImage.src = `img/${nameFile+1}.jpg`
+              } ,1500)
+              
+            }
+          }
+
+          btnBack.onclick =  function (){
+            let currentImgName = mainImage.src;
+            let nameFile = parseInt(currentImgName.slice(currentImgName.indexOf("img/")+4, currentImgName.indexOf(".")));
+            
+            if(nameFile==1){
+              //меняем класс центральной картинки, ставим задержку, чтоб было видно переход
+              setTimeout(mainImage.className = 'show-img',1500)
+              mainImage.src = `img/9.jpg`;
+            }
+            else{
+              //сначала делаем невидимой картинку
+              mainImage.className = "hidden-img" 
+              //после задержки делаем видимой и меняем саму картинку, на ту что выбрали
+              setTimeout( function(){
+                mainImage.className = "show-img" 
+                mainImage.src = `img/${nameFile-1}.jpg`
+              } ,1500)
+              
+            }
+          }
+
+
+          let modal = document.querySelector("#modal");
+          let closeButton = document.querySelector("#modal .close");
+
+          //убираем модальоне окно при нажатии на кнопку close
+          closeButton.onclick = function(){
+            modal.className = "hidden-block"
+          }
+
+          closeLigthBox.onclick = function(){
+            lighthBox.className = "hidden-block"
+          }
+
+          //убираем модальоне окно при при двойном клике на модальную картинку
+    </script>
+  </body>
+</html>

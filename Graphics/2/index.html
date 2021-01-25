@@ -1,0 +1,95 @@
+<html>
+  <head>
+  </head>
+  <body>
+    
+    <div>
+        <div class="images">
+            <canvas class="side-image"></canvas>
+            <canvas class="side-image"></canvas>
+            <canvas class="side-image"></canvas>
+            <canvas class="side-image"></canvas>
+            <div class="main-image">
+                <img src="img/4.jpg">
+                <button class="next">Next</button>
+            </div>
+            
+            <canvas class="side-image" ></canvas>
+            <canvas class="side-image"></canvas>
+            <canvas class="side-image"></canvas>
+            <canvas class="side-image"></canvas>
+        </div>
+    </div>
+
+    <style>
+       .images{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 9px;
+            row-gap: 9px;
+       }
+      img{
+           width: 300px;
+           height: 300px;
+       }
+       .main-image{
+           margin: 20px;
+           display: grid;
+       }
+       button{
+        width: 100px;
+       }
+    </style>
+
+    <script type="text/javascript">
+          //массив всех возможных адресов картинок
+          let imagBlock = ["img/1.jpg", "img/2.jpg", "img/3.jpg", "img/5.jpg", "img/6.jpg", "img/7.jpg", "img/8.jpg", "img/9.jpg"];
+          let mainImage = document.querySelector(".main-image img");
+          let btn = document.querySelector(".next");
+          //находим все канвасы
+          let c = document.querySelectorAll("canvas");
+
+          for(let i =0; i< imagBlock.length; i++){
+            //создаем катинки
+            let img = new Image();
+            img.src = imagBlock[i];
+            img.onload = function(){
+              let ctx=c[i].getContext("2d");
+              //добавляем в канвасы атрибут, который бует хранить адрес картинки (для галереи)
+              c[i].setAttribute("imgUrl", img.src);
+              //создаем элипс
+              ctx.ellipse(75, 70, 70, 35, (i+1)*20 * Math.PI/180, 0, 2 * Math.PI, true);
+              ctx.lineJoin = "round"; // сделать углы рамок закруглёнными
+              ctx.lineWidth = 40; // толщина рамок
+              ctx.stroke(); // нарисовать рамку
+              ctx.closePath();
+              ctx.fill();
+              
+              ctx.globalCompositeOperation = 'source-in';
+              //рисуем картинку
+              ctx.drawImage(img,0,0); 
+            }
+
+          }
+
+          for(let i = 0; i< c.length; i++){
+            c[i].addEventListener('click', function(){
+              atr = c[i].getAttribute("imgUrl");
+              mainImage.src = `img/${parseInt(atr.slice(atr.indexOf("img/")+4, atr.indexOf(".")))}.jpg`;
+                
+            })
+          }
+          btn.onclick =  function (){
+            let currentImgName = mainImage.src;
+            let nameFile = parseInt(currentImgName.slice(currentImgName.indexOf("img/")+4, currentImgName.indexOf(".")));
+            if(nameFile==9){
+                mainImage.src = `img/1.jpg`;
+
+            }
+            else{
+                mainImage.src = `img/${nameFile+1}.jpg`;
+            }
+          }
+    </script>
+  </body>
+</html>

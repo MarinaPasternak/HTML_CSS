@@ -1,0 +1,128 @@
+<html>
+  <head>
+  </head>
+  <body>
+    
+    <div>
+        <div class="images">
+            <img src="img/1.jpg">
+            <img src="img/2.jpg">
+            <img src="img/3.jpg">
+            <img src="img/4.jpg">
+            <img src="img/5.jpg">
+            <img src="img/6.jpg">
+            <img src="img/7.jpg">
+            <img src="img/8.jpg">
+            <img src="img/9.jpg">
+            <img src="img/10.jpg">
+            <img src="img/11.jpg">
+            <img src="img/12.jpg">
+        </div>
+        <form class="radio-buttons">
+            <label for="2" >2</label>
+            <input type="radio" name="grid-size" id="2" />
+            <label for="3" >3</label>
+            <input type="radio" name="grid-size" id="3" />
+            <label for="4" >4</label>
+            <input type="radio" name="grid-size" id="4" />
+            <label for="6" >6</label>
+            <input type="radio" name="grid-size" id="5" />
+        </form>
+    </div>
+
+    <style>
+        .images{
+            display: grid;
+            grid-row-gap: 20px;
+            grid-column-gap: 20px;
+            grid-template-columns: repeat(6, 300px);
+            column-gap: 9px;
+            row-gap: 9px;  
+        }
+        
+       .images6{
+            display: grid;
+            grid-row-gap: 20px;
+            grid-column-gap: 20px;
+            grid-template-columns: repeat(6, 300px);
+            column-gap: 9px;
+            row-gap: 9px;
+       }
+       .images4{
+            display: grid;
+            grid-row-gap: 20px;
+            grid-column-gap: 20px;
+            grid-template-columns: repeat(4, 400px);
+            column-gap: 9px;
+            row-gap: 9px;
+       }
+       .images3{
+            display: grid;
+            grid-row-gap: 20px;
+            grid-column-gap: 20px;
+            grid-template-columns: repeat(3, 500px);
+            column-gap: 9px;
+            row-gap: 9px;
+       }
+       .images2{
+            display: grid;
+            grid-row-gap: 20px;
+            grid-column-gap: 20px;
+            grid-template-columns: repeat(2, 600px);
+            column-gap: 9px;
+            row-gap: 9px;
+       }
+      img{
+           width: 300px;
+           height: 300px;
+       }
+    </style>
+
+    <script type="text/javascript">
+        // находим блок картинок
+          let imagBlock = document.querySelector(".images");
+          let imgs = document.querySelectorAll(".images img");
+        // все радио батоны
+          let inputs = document.querySelectorAll("input");
+
+          for(let i = 0; i< inputs.length; i++){
+              //на каждый радио батон навешиваем событие
+            inputs[i].addEventListener('change', function() {
+                // в айди передаем к-во столбцов
+                switch(this.id){
+                    //в зависимости от номера йди присваиваем класс блоку картинок
+                    case '2':
+                        imagBlock.className = "images2";
+                        for(let i=0; i<imgs.length;i++){
+                            imgs[i].style.width = "600px";
+                            imgs[i].style.height = "650px";
+                        }
+                        break;
+                    case '3':
+                        imagBlock.className = "images3";
+                        for(let i=0; i<imgs.length;i++){
+                            imgs[i].style.width = "500px";
+                            imgs[i].style.height = "550px";
+                        }
+                        break;
+                    case '4':
+                        imagBlock.className = "images4";
+                        for(let i=0; i<imgs.length;i++){
+                            imgs[i].style.width = "400px";
+                            imgs[i].style.height = "450px";
+                        }
+                        break;
+                    case '6':
+                        imagBlock.className = "images6";
+                        for(let i=0; i<imgs.length;i++){
+                            imgs[i].style.width = "300px";
+                            imgs[i].style.height = "300px";
+                        }
+                        break;
+                    default: imagBlock.className = "images6";
+                }
+            });
+          }
+    </script>
+  </body>
+</html>
